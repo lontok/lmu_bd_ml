@@ -234,9 +234,13 @@ ORDER BY product_count DESC;
 # GROUP BY HAVING
 ############
 
-# Show me each vendor and the average by vendor of the number of days to deliver products that are greater than the average delivery days for all vendors
+# Show me each vendor and the average by vendor of the number of days to deliver products
+# that are greater than the average delivery days for all vendors
+
+# test main GROUP BY query first
 # run for having filter > 5 w/o subquery
-# test subquery first
+# test subquery separately
+
 SELECT Vendors.VendName, AVG(Product_Vendors.DaysToDeliver) AS avg_delivery
 FROM mysql.sales_orders.vendors
 JOIN mysql.sales_orders.product_vendors
@@ -246,6 +250,8 @@ HAVING AVG(product_vendors.DaysToDeliver) > (SELECT AVG(DaysToDeliver) FROM mysq
 
 # How many orders are for only one product?
 # run subquery first and include COUNT(*) in the SELECT
+# you could just run the subquery to get the results but you may have to
+  # reference the count # in a report or store it in a db
 SELECT COUNT(*) AS single_item_order_count
 FROM (SELECT order_details.OrderNumber
       FROM mysql.sales_orders.Order_Details
